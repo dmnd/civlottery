@@ -60,12 +60,15 @@ def print_assignments(assignments, players, vetoes):
     print
 
     print_heading("vetoes")
-    vi = collections.defaultdict(int)
-    for v in vetoes:
-        oldciv = assignments[v][vi[v]]
-        vi[v] += 1
-        newciv = assignments[v][vi[v]]
-        print "{} vetoed {} and drew {}".format(v, oldciv, newciv)
+    veto_index = collections.defaultdict(int)
+    for vetoing_player in vetoes:
+        assignment_chain = assignments[vetoing_player]
+        index = veto_index[vetoing_player]
+
+        oldciv, newciv = assignment_chain[index:index+2]
+        veto_index[vetoing_player] += 1
+
+        print "{} vetoed {} and drew {}".format(vetoing_player, oldciv, newciv)
     print
 
     print_heading("current draw")
